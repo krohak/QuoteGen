@@ -126,7 +126,7 @@ model.add(LSTM(256))
 
 # model.add(Dropout(0.2))
 
-#model.add(Dense(8))
+model.add(Dense(32))
 
 model.add(Dense(y.shape[1]
                 ,activation=relu_advanced #'sigmoid'#relu_advanced # 0 to max_word
@@ -137,7 +137,8 @@ model.add(Dense(y.shape[1]
 #optimizer = RMSprop(lr=0.01)
 optimizer = Adam(lr=0.001, beta_1=0.9, beta_2=0.999)
 model.compile(
-    loss= 'mean_squared_logarithmic_error',  #'sparse_categorical_crossentropy',
+    loss='sparse_categorical_crossentropy',
+#    loss= 'mean_squared_logarithmic_error',  #'sparse_categorical_crossentropy',
     optimizer=optimizer)
 
 
