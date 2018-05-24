@@ -48,7 +48,7 @@ text = np.ndarray.flatten(np.asarray(text))
 # In[4]:
 
 # In[]: cut the text in semi-redundant sequences of maxlen characters
-maxlen = 20
+maxlen = 10
 step = 1
 seq = []
 next_seq = []
@@ -112,21 +112,21 @@ model = Sequential()
 model.add(LSTM(256, input_shape=(
                             X.shape[1], #None 
                             X.shape[2]),
-               #return_sequences=True,
+               return_sequences=True,
                #activation='sigmoid'
-               unroll=True
+               #unroll=True
                ))
 
 
 # model.add(Dropout(0.2))
-# model.add(LSTM(256))
+model.add(LSTM(256))
 # model.add(LSTM(y.shape[1]
 #                ,activation='sigmoid'
 #                ))
 
 # model.add(Dropout(0.2))
 
-model.add(Dense(8))
+#model.add(Dense(8))
 
 model.add(Dense(y.shape[1]
                 ,activation= 'sigmoid'#relu_advanced # 0 to max_word
@@ -137,7 +137,7 @@ model.add(Dense(y.shape[1]
 #optimizer = RMSprop(lr=0.01)
 optimizer = Adam(lr=0.001, beta_1=0.9, beta_2=0.999)
 model.compile(
-    loss='mse', #sparse_categorical_crossentropy
+    loss= 'mean_squared_logarithmic_error',  #'sparse_categorical_crossentropy',
     optimizer=optimizer)
 
 
