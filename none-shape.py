@@ -203,7 +203,7 @@ checkpoint = ModelCheckpoint(filepath, monitor='loss', verbose=1, save_best_only
 
 model.fit(X, y,
           batch_size=128,
-          epochs=1,
+          epochs=1000,
           validation_split=0.05,
           callbacks=[print_callback, checkpoint])
 
