@@ -95,7 +95,7 @@ X = np.reshape(seq, (len(seq), maxlen, 1))
 X = X / max_word
 # one hot encode the output variable
 #y = to_categorical(next_seq, num_classes= max_word)
-y = np.reshape(next_seq,(next_seq.shape[0],1)) / max_word
+y = np.reshape(next_seq,(next_seq.shape[0],1)) #/ max_word
 
 
 # In[10]:
@@ -129,7 +129,7 @@ model.add(LSTM(256))
 #model.add(Dense(8))
 
 model.add(Dense(y.shape[1]
-                ,activation= 'sigmoid'#relu_advanced # 0 to max_word
+                ,activation=relu_advanced #'sigmoid'#relu_advanced # 0 to max_word
                ))
 
 #model.add(Activation('softmax'))
@@ -189,7 +189,7 @@ def on_epoch_end(epoch, logs):
             preds = model.predict(x_pred, verbose=0)
             preds = preds[0]
             #print(preds.shape)
-            next_index = round(sample(preds, diversity)[0]*max_word) # 
+            next_index = round(sample(preds, diversity)[0]) # 
             #print(next_index)
             next_char = int_to_word[next_index]
 
