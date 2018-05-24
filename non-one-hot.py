@@ -110,7 +110,7 @@ print('Build model...')
 model = Sequential()
 
 model.add(LSTM(256, input_shape=(
-                            X.shape[1], #None 
+                            X.shape[1], #None,
                             X.shape[2]),
                return_sequences=True,
                #activation='sigmoid'
@@ -137,7 +137,7 @@ model.add(Dense(y.shape[1]
 #optimizer = RMSprop(lr=0.01)
 optimizer = Adam(lr=0.001, beta_1=0.9, beta_2=0.999)
 model.compile(
-    loss='sparse_categorical_crossentropy',
+    loss='mse',
 #    loss= 'mean_squared_logarithmic_error',  #'sparse_categorical_crossentropy',
     optimizer=optimizer)
 
@@ -196,7 +196,7 @@ def on_epoch_end(epoch, logs):
 
             generated.join(str(next_char))
             sentence = np.append(
-                               sentence[1:],  #sentence,
+                                 sentence[1:],   #sentence, 
                                  next_index)
 
             sys.stdout.write(next_char)
