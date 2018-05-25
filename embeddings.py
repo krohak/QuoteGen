@@ -197,8 +197,8 @@ for topic in topics:
 
 
     # In[33]:
-    filepath="QG-weights-%s-{epoch:02d}-{loss:.4f}-{accuracy:.4f}.hdf5"%topic
-    checkpoint = ModelCheckpoint(filepath, monitor='loss, accuracy', verbose=1, save_best_only=True, mode='min')
+    filepath="QG-weights-%s-{epoch:02d}-{loss:.4f}-{acc:.4f}.hdf5"%topic
+    checkpoint = ModelCheckpoint(filepath, monitor='loss', verbose=1, save_best_only=True, mode='min')
 
     print_callback = LambdaCallback(on_epoch_end=on_epoch_end)
 
@@ -206,6 +206,6 @@ for topic in topics:
     # In[ ]:
 
     model.fit(X_train, y_train, validation_data=(X_test, y_test), 
-              epochs=50, 
-              batch_size=1024,
+              epochs=35, 
+              batch_size=24,
               callbacks=[checkpoint, print_callback])
