@@ -117,13 +117,7 @@ X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.2)
 
 # In[26]:
 
-e = Embedding(
-	vocab_size, 
-	100, 
-	weights=[embedding_matrix], 
-	#input_length=maxlen, 
-	#trainable=False
-	)
+e = Embedding(vocab_size, 100, weights=[embedding_matrix], input_length=maxlen, trainable=False)
 
 
 # In[27]:
@@ -134,16 +128,14 @@ model.add(e)
 
 # In[28]:
 
-#model.add(Conv1D(filters=32, kernel_size=5, padding='same', activation='relu'))
-#model.add(MaxPooling1D(pool_size=3))
+# model.add(Conv1D(filters=32, kernel_size=3, padding='same', activation='relu'))
+# model.add(MaxPooling1D(pool_size=2))
 
 
 # In[29]:
 
-#model.add(LSTM(100, return_sequences=True)) #
+# model.add(LSTM(100, return_sequences=True)) #
 model.add(LSTM(100))
-
-#model.add(Dense(100, activation='relu'))
 model.add(Dense(y.shape[1]))
 
 
@@ -192,8 +184,7 @@ def on_epoch_end(epoch, logs):
         #sys.stdout.write(generated)
 
         for i in range(20):
-            x_pred = np.reshape(sentence,(1, -1 #maxlen
-						))
+            x_pred = np.reshape(sentence,(1, maxlen))
 
             preds = model.predict(x_pred, verbose=0)
             preds = preds[0]
@@ -203,8 +194,7 @@ def on_epoch_end(epoch, logs):
             next_char = index_word[next_index]
 
             generated.join(str(next_char))
-            sentence = np.append(sentence #[1:]
-					,next_index)
+            sentence = np.append(sentence[1:],next_index)
 
             sys.stdout.write(next_char)
             sys.stdout.write(" ")
@@ -221,7 +211,7 @@ print_callback = LambdaCallback(on_epoch_end=on_epoch_end)
 # In[ ]:
 
 model.fit(X_train, y_train, validation_data=(X_test, y_test), 
-          epochs=100, 
-          batch_size=24,
+          epochs=10, 
+          batch_size=24, #64
           callbacks=[print_callback])
 
