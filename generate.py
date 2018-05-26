@@ -77,14 +77,14 @@ def on_epoch_end(sentence, model, maxlen = 10):
             predicted = predicted + next_char + ' ' 
             
             # sys.stdout.write(next_char)
-            if i % (maxlen / 3) == 0:
-                sys.stdout.write(".")
+            if i % (maxlen // 4) == 0:
+                sys.stdout.write("-")
             sys.stdout.flush()
         
         sys.stdout.write("\n")
-        print('----- Generating with seed: %s'%''.join([str(index_word[word])+' ' for word in original_sentence]))
+        print('----- Input seed: %s'%''.join([str(index_word[word])+' ' for word in original_sentence]))
         print('----- Output: %s')%predicted
-    sys.stdout.write("\n")
+    sys.stdout.write("-----\n")
     return sentence
 
         
@@ -96,4 +96,4 @@ sentence = funny_doc[start_index: start_index + seedlen]
 
 for model in model_list:
     sentence = on_epoch_end(sentence,model,maxlen)
-    #sentence = sentence[maxlen:] #
+    sentence = sentence[maxlen:] #
