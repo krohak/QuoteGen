@@ -6,6 +6,6 @@ data/glove.6B.100d.txt
 	
 QG-weights-*
 QG-punc-*
-output
+op
 op-punc
 Model.pyc
