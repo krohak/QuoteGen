@@ -45,7 +45,7 @@ funny_doc = encoded_docs[0]
 model_list = []
 
 
-# ## Do for all docs
+# ## Do for all docs except first
 for topic in topics[1:]:
     model_funny = Model(vocab_size,topic)
     model = model_funny.load_model()
@@ -65,7 +65,7 @@ def on_epoch_end(sentence, model, maxlen = 10):
         next_index =  np.argmax(preds)
         next_char = index_word[next_index]
 
-        sentence = np.append(sentence, next_index)
+        # sentence = np.append(sentence, next_index)
         predicted = predicted + next_char + ' '
 
         # sys.stdout.write(next_char)
