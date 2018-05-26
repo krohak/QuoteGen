@@ -52,29 +52,8 @@ for topic in topics:
 
     
     # In[15]:
-    maxlen = 100
+    maxlen = 10
     
-    '''
-    step = 1
-    
-    seq_funny = []
-    next_seq_funny = []
-
-    quote_len_funny = len(funny_doc)
-
-
-    # In[16]:
-
-    for i in range(0, quote_len_funny - maxlen, step):
-        seq_funny.append(funny_doc[i: i + maxlen])
-        next_seq_funny.append(funny_doc[i + maxlen])
-
-    print('nb sequences:', len(seq_funny))
-
-    seq_funny = np.asarray(seq_funny)
-    next_seq_funny = np.asarray(next_seq_funny)
-    '''
-
     # # Text Generation using Word Embeddings
 
 
