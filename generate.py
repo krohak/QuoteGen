@@ -62,12 +62,8 @@ def sample(preds, temperature=1.0):
 
 
 def on_epoch_end(sentence, model, maxlen = 10):
-    print()
-    print('----- Generating text:')
-
-
     for diversity in [1.0]: #0.2, 0.5, 1.2
-        print('----- Generating with seed: %s'%''.join([str(index_word[word])+' ' for word in sentence]))
+        print('----- Generating with seed: %s\n'%''.join([str(index_word[word])+' ' for word in sentence]))
         print('----- Output: ')
         for i in range(maxlen):
             x_pred = np.reshape(sentence,(1, -1))
@@ -82,7 +78,6 @@ def on_epoch_end(sentence, model, maxlen = 10):
             sys.stdout.write(next_char)
             sys.stdout.write(" ")
             sys.stdout.flush()
-    print('\n')        
     return sentence
 
         
