@@ -1,4 +1,4 @@
-import numpy as np
+'''import numpy as np
 import sys
 from numpy import array
 from numpy import asarray
@@ -15,7 +15,18 @@ from keras.optimizers import Adam
 from keras.callbacks import LambdaCallback
 from keras.callbacks import ModelCheckpoint
 from sklearn.model_selection import train_test_split
-from keras.utils import to_categorical
+from keras.utils import to_categorical'''
+
+import sys
+import numpy as np
+from numpy import array
+from numpy import asarray
+from numpy import zeros
+
+from keras.preprocessing.text import Tokenizer
+from keras.models import Sequential
+from keras.layers import Dense, LSTM, Activation, Embedding
+from keras.optimizers import Adam
 
 # In[3]:
 
@@ -87,17 +98,17 @@ for topic in topics:
     # In[20]:
 
 
-    y = to_categorical(next_seq_funny, num_classes=vocab_size)
+    # y = to_categorical(next_seq_funny, num_classes=vocab_size)
 
 
     # In[22]:
 
-    X = seq_funny
+    # X = seq_funny
 
 
     # In[25]:
 
-    X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.1)
+    # X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.1)
 
 
 
@@ -130,7 +141,7 @@ for topic in topics:
     model.add(LSTM(100))
 
     #model.add(Dense(100, activation='relu'))
-    model.add(Dense(y.shape[1]))
+    model.add(Dense(vocab_size))# y.shape[1]))
 
 
     # In[30]:
@@ -138,7 +149,7 @@ for topic in topics:
     model.add(Activation('softmax'))
     optimizer = Adam(lr=0.001, beta_1=0.9, beta_2=0.999)
     
-    filename = "QG-weights-%s-34-1.9233-0.5508.hdf5"%topic
+    filename = "QG-weights-%s.hdf5"%topic
     model.load_weights(filename)
     
     model.compile(
@@ -171,7 +182,7 @@ for topic in topics:
             print('----- diversity:', diversity)
 
             generated = ''
-            sentence = funny_doc[start_index: start_index + 5] #maxlen]
+            sentence = funny_doc[start_index: start_index + maxlen]
             print(sentence)
             generated.join([str([index_word[value]]).join(' ') for value in sentence])
             print('----- Generating with seed: %s'%[index_word[word] for word in sentence])
