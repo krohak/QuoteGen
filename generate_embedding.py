@@ -5,9 +5,12 @@ from numpy import asarray
 from numpy import zeros
 
 from keras.preprocessing.text import Tokenizer
+from Model import Model
+'''
 from keras.models import Sequential
 from keras.layers import Dense, LSTM, Activation, Embedding
 from keras.optimizers import Adam
+'''
 
 # In[3]:
 
@@ -58,7 +61,9 @@ for topic in topics:
 
 
     # In[20]:
-
+    model = Model(vocab_size,topic)
+    
+    '''
     e = Embedding( vocab_size, 100, 
         #weights=[embedding_matrix], input_length=maxlen, trainable=False
         )
@@ -86,19 +91,19 @@ for topic in topics:
         optimizer=optimizer,
         metrics=['accuracy'])
     print(model.summary())
-
+    '''
 
     # In[32]:
 
     def sample(preds, temperature=1.0):
         # helper function to sample an index from a probability array
         # preds = preds[1:]
-        preds = np.asarray(preds).astype('float64')
-        preds = np.log(preds) / temperature
-        exp_preds = np.exp(preds)
-        preds = exp_preds / np.sum(exp_preds)
-        probas = np.random.multinomial(1, preds, 1)
-        return np.argmax(probas)
+        # preds = np.asarray(preds).astype('float64')
+        # preds = np.log(preds) / temperature
+        # exp_preds = np.exp(preds)
+        # preds = exp_preds / np.sum(exp_preds)
+        # probas = np.random.multinomial(1, preds, 1)
+        return np.argmax(preds)
 
 
     def on_epoch_end(epoch, logs):
@@ -107,7 +112,7 @@ for topic in topics:
         print('----- Generating text after Epoch: %d' % epoch)
 
         start_index = np.random.randint(0, len(funny_doc) - maxlen - 1)
-        for diversity in [ 1.0, 1.2]: #0.2, 0.5
+        for diversity in [1.0]: #0.2, 0.5, 1.2
             print('----- diversity:', diversity)
 
             generated = ''
