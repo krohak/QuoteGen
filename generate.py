@@ -64,7 +64,7 @@ def sample(preds, temperature=1.0):
 def on_epoch_end(sentence, model, maxlen = 10):
     for diversity in [1.0]: #0.2, 0.5, 1.2
         predicted = ''
-        original_sentence = ''.join([str(index_word[word])+' ' for word in original_sentence])
+        original_sentence = ''.join([str(index_word[word])+' ' for word in sentence])
         for i in range(maxlen):
             x_pred = np.reshape(sentence,(1, -1))
 
