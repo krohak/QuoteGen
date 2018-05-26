@@ -26,7 +26,7 @@ with open('data/all-punctuation.txt','r') as quotefile:
     
 # In[4]:
 
-t = Tokenizer()
+t = Tokenizer(filters='')
 t.fit_on_texts(quotes)
 vocab_size = len(t.word_index) + 1
 print(vocab_size)
