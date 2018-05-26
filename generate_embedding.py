@@ -61,8 +61,8 @@ for topic in topics:
 
 
     # In[20]:
-    model = Model(vocab_size,topic)
-    
+    model_funny = Model(vocab_size,topic)
+    model = model_funny.load_model()
     '''
     e = Embedding( vocab_size, 100, 
         #weights=[embedding_matrix], input_length=maxlen, trainable=False
