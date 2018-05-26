@@ -26,5 +26,5 @@ class Model:
             optimizer=optimizer,
             metrics=['accuracy'])
 
-        print(model.summary())
+        # print(model.summary())
         return model

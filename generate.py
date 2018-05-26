@@ -67,12 +67,7 @@ def on_epoch_end(sentence, model, maxlen = 10):
 
 
     for diversity in [1.0]: #0.2, 0.5, 1.2
-        print('----- diversity:', diversity)
-
-        generated = ''
-        print(sentence)
-        generated.join([str([index_word[value]]).join(' ') for value in sentence])
-        print('----- Generating with seed: %s'%[index_word[word] for word in sentence])
+        print('----- Generating with seed: %s'%(str(index_word[word]) for word in sentence))
 
         for i in range(maxlen):
             x_pred = np.reshape(sentence,(1, -1))
@@ -82,7 +77,6 @@ def on_epoch_end(sentence, model, maxlen = 10):
             next_index = np.argmax(preds) #sample(preds,diversity)
             next_char = index_word[next_index]
 
-            generated.join(str(next_char))
             sentence = np.append(sentence, next_index)
 
             sys.stdout.write(next_char)
