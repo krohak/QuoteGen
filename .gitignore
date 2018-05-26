@@ -5,5 +5,7 @@ data/embeddings_index.npy
 data/glove.6B.100d.txt
 	
 QG-weights-*
+QG-punc-*
 output
+op-punc
 Model.pyc

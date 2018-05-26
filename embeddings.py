@@ -206,6 +206,6 @@ for topic in topics:
     # In[ ]:
 
     model.fit(X, y, #X_train, y_train, validation_data=(X_test, y_test), 
-              epochs=35, 
+              epochs=30, 
               batch_size=24,
               callbacks=[checkpoint, print_callback])
