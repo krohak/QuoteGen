@@ -68,35 +68,35 @@ def sample(preds, temperature=1.0):
 
 
 def on_epoch_end(epoch, logs, sentence, model):
-print()
-print('----- Generating text after Epoch: %d' % epoch)
+    print()
+    print('----- Generating text after Epoch: %d' % epoch)
 
 
-for diversity in [1.0]: #0.2, 0.5, 1.2
-    print('----- diversity:', diversity)
+    for diversity in [1.0]: #0.2, 0.5, 1.2
+        print('----- diversity:', diversity)
 
-    generated = ''
-    print(sentence)
-    generated.join([str([index_word[value]]).join(' ') for value in sentence])
-    print('----- Generating with seed: %s'%[index_word[word] for word in sentence])
+        generated = ''
+        print(sentence)
+        generated.join([str([index_word[value]]).join(' ') for value in sentence])
+        print('----- Generating with seed: %s'%[index_word[word] for word in sentence])
 
-    for i in range(20):
-        x_pred = np.reshape(sentence,(1, -1))
+        for i in range(20):
+            x_pred = np.reshape(sentence,(1, -1))
 
-        preds = model.predict(x_pred, verbose=0)
-        preds = preds[0]
-        next_index = np.argmax(preds) #sample(preds,diversity)
-        next_char = index_word[next_index]
+            preds = model.predict(x_pred, verbose=0)
+            preds = preds[0]
+            next_index = np.argmax(preds) #sample(preds,diversity)
+            next_char = index_word[next_index]
 
-        generated.join(str(next_char))
-        sentence = np.append(sentence, next_index)
+            generated.join(str(next_char))
+            sentence = np.append(sentence, next_index)
 
-        sys.stdout.write(next_char)
-        sys.stdout.write(" ")
-        sys.stdout.flush()
-        print()
-        
-        return sentence
+            sys.stdout.write(next_char)
+            sys.stdout.write(" ")
+            sys.stdout.flush()
+            print()
+
+            return sentence
 
         
         
