@@ -4,3 +4,5 @@ trained_weights/
 data/embeddings_index.npy
 data/glove.6B.100d.txt
 	
+QG-weights-*
+output
