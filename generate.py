@@ -76,7 +76,7 @@ def on_epoch_end(sentence, model, maxlen = 10):
             next_index = sample(preds,diversity) #np.argmax(preds) 
             next_char = index_word[next_index]
 
-            sentence = np.append(sentence, next_index)
+            # sentence = np.append(sentence, next_index)
             predicted = predicted + next_char + ' ' 
             
             # sys.stdout.write(next_char)
