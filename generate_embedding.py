@@ -97,8 +97,8 @@ for topic in topics:
         preds = np.log(preds) / temperature
         exp_preds = np.exp(preds)
         preds = exp_preds / np.sum(exp_preds)
-        probas = np.random.multinomial(1, preds, 1)
-        return np.argmax(probas)
+        # probas = np.random.multinomial(1, preds, 1)
+        return np.argmax(preds)
 
 
     def on_epoch_end(epoch, logs):
