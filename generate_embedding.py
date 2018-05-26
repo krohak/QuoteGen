@@ -171,7 +171,7 @@ for topic in topics:
             print('----- diversity:', diversity)
 
             generated = ''
-            sentence = funny_doc[start_index: start_index + maxlen]
+            sentence = funny_doc[start_index: start_index + 5] #maxlen]
             print(sentence)
             generated.join([str([index_word[value]]).join(' ') for value in sentence])
             print('----- Generating with seed: %s'%[index_word[word] for word in sentence])
