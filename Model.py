@@ -18,7 +18,7 @@ class Model:
 
         model.add(Activation('softmax'))
         optimizer = Adam(lr=0.001, beta_1=0.9, beta_2=0.999)
-        filename = "QG-weights-%s.hdf5"%self.topic
+        filename = "QG-punc-%s.hdf5"%self.topic
         model.load_weights(filename)
 
         model.compile(
