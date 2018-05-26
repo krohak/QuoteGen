@@ -27,7 +27,7 @@ index_word = index_word.item()
 topics = [ #'death' ,
 		#'family',
 	# 'death', 'funny',
-     'funny', 'freedom' , 'death',
+     'funny', 'freedom' , #'death',
 	#'life' ,
     	#'love',
 	#'happiness',
