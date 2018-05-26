@@ -96,7 +96,7 @@ def on_epoch_end(epoch, logs, sentence, model):
             sys.stdout.flush()
             print()
 
-            return sentence
+        return sentence
 
         
         
