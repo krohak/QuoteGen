@@ -52,43 +52,29 @@ for topic in topics[1:]:
     model_list.append(model)
 
 
-    
-# # Text Generation using Word Embeddings
-def sample(preds, temperature=1.0):
-# helper function to sample an index from a probability array
-    preds = np.asarray(preds).astype('float64')
-    preds = np.log(preds) / temperature
-    exp_preds = np.exp(preds)
-    preds = exp_preds / np.sum(exp_preds)
-    probas = np.random.multinomial(1, preds, 1)
-    return np.argmax(probas)
-
 
 def on_epoch_end(sentence, model, maxlen = 10):
-    for diversity in [1.0, 0.2, 0.5, 1.2]: #
-        predicted = ''
-        original_sentence = ''.join([str(index_word[word])+' ' for word in sentence])
-        for i in range(maxlen):
-            x_pred = np.reshape(sentence,(1, -1))
+    predicted = ''
+    original_sentence = ''.join([str(index_word[word])+' ' for word in sentence])
+    for i in range(maxlen):
+        x_pred = np.reshape(sentence,(1, -1))
 
-            preds = model.predict(x_pred, verbose=0)
-            preds = preds[0]
-            next_index = sample(preds,diversity) #np.argmax(preds) 
-            next_char = index_word[next_index]
-
-            # sentence = np.append(sentence, next_index)
-            predicted = predicted + next_char + ' ' 
-            
-            # sys.stdout.write(next_char)
-            if i % (maxlen // 4) == 0:
-                sys.stdout.write("-")
-            sys.stdout.flush()
+        preds = model.predict(x_pred, verbose=0)
+        preds = preds[0]
+        next_index = np.argmax(preds) 
+        next_char = index_word[next_index]
         
-        sys.stdout.write("\n")
-        print('----- Input seed: %s'%original_sentence.split('.')[-1])
-        print('----- Output: %s'%predicted.split('.')[0])
+        predicted = predicted + next_char + ' ' 
+        
+        if i % (maxlen // 4) == 0:
+            sys.stdout.write("-")
+        sys.stdout.flush()
+        
+    sys.stdout.write("\n")
+    print('----- Input seed: %s'%original_sentence.split('.')[-1])
+    print('----- Output: %s.'%predicted.split('.')[0])
     sys.stdout.write("-----\n")
-    return sentence
+    return original_sentence.split('.')[-1] + ' ' + predicted.split('.')[0]
 
         
 seedlen = 50
