@@ -96,7 +96,7 @@ for topic in topics:
         preds = np.asarray(preds).astype('float64')
         preds = np.log(preds) / temperature
         exp_preds = np.exp(preds)
-        preds = exp_preds / np.sum(exp_preds)
+        # preds = exp_preds / np.sum(exp_preds)
         # probas = np.random.multinomial(1, preds, 1)
         return np.argmax(preds)
 
@@ -111,7 +111,8 @@ for topic in topics:
             print('----- diversity:', diversity)
 
             generated = ''
-            sentence = funny_doc[start_index: start_index + maxlen]
+            sentence = [3, 46, 112, 786, 49, 5, 63, 41, 201, 28]
+            #funny_doc[start_index: start_index + maxlen]
             print(sentence)
             generated.join([str([index_word[value]]).join(' ') for value in sentence])
             print('----- Generating with seed: %s'%[index_word[word] for word in sentence])
