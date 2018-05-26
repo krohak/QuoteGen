@@ -26,8 +26,8 @@ index_word = index_word.item()
 
 topics = [ #'death' ,
 		#'family',
-	# 'death', 'funny'
-     'funny', 'freedom' #, 'funny',
+	 'death', 'funny', 'freedom'
+    # 'funny', 'freedom' #, 'funny',
 	#'life' ,
     	#'love',
 	#'happiness',
@@ -65,7 +65,7 @@ def on_epoch_end(sentence, model, maxlen = 10):
         next_index =  np.argmax(preds)
         next_char = index_word[next_index]
 
-        # sentence = np.append(sentence, next_index)
+        sentence = np.append(sentence, next_index)
         predicted = predicted + next_char + ' '
 
         # sys.stdout.write(next_char)
@@ -77,7 +77,7 @@ def on_epoch_end(sentence, model, maxlen = 10):
     print('----- Input seed: %s'%original_sentence.split('.')[-1])
     print('----- Output: %s'%predicted.split('.')[0])
     sys.stdout.write("-----\n")
-    return sentence
+    return original_sentence.split('.')[-1] + ' ' + predicted.split('.')[0]
 
 
 seedlen = 50
