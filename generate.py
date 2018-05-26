@@ -77,7 +77,7 @@ def on_epoch_end(sentence, model, maxlen = 10):
             predicted = predicted + next_char + ' ' 
             
             # sys.stdout.write(next_char)
-            if i % (maxlen // 3) == 0:
+            if i % (maxlen / 3) == 0:
                 sys.stdout.write(".")
             sys.stdout.flush()
         
