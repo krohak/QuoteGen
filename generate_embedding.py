@@ -24,8 +24,9 @@ index_word = index_word.item()
 
 topics = [ #'death' , 'family', 'freedom' , 'funny', 'life' ,
     	#'love', 
-	'happiness', 'death'
-	#'success', 'science', 'politics'
+	#'happiness', 'death',
+	'success', 'death',
+	#'science', 'politics'
 ]
 
 # In[13]:
@@ -88,12 +89,12 @@ def on_epoch_end(sentence, model, maxlen = 10):
     return sentence
 
         
-seedlen = 5
-maxlen = 5
-# start_index = np.random.randint(0, len(funny_doc) - seedlen - 1)
-# sentence = funny_doc[start_index: start_index + seedlen]
-sentence = [2, 13, 148, 5, 2] # to be happy is to
+seedlen = 10
+maxlen = 10
+start_index = np.random.randint(0, len(funny_doc) - seedlen - 1)
+sentence = funny_doc[start_index: start_index + seedlen]
+#sentence = [2, 13, 148, 5, 2] # to be happy is to
 
 for model in model_list:
     sentence = on_epoch_end(sentence,model,maxlen)
-    sentence = sentence[5:] #
+    sentence = sentence[maxlen:] #
