@@ -53,7 +53,9 @@ index_word = index_word.item()
 
 
 topics = [ #'death' , 'family', 'freedom' , 'funny', 'life' ,
-    'love', #'happiness', 'success', 'science', 'politics'
+    	#'love', 
+	'happiness', 
+	#'success', 'science', 'politics'
 ]
 # ## Do for all docs
 for topic in topics:
