@@ -138,7 +138,7 @@ for topic in topics:
     model.add(Activation('softmax'))
     optimizer = Adam(lr=0.001, beta_1=0.9, beta_2=0.999)
     
-    filename = "QG-weights-%s-34-1.3513-0.6991.hdf5"
+    filename = "QG-weights-%s-34-1.3513-0.6991.hdf5"%s
     model.load_weights(filename)
     
     model.compile(
