@@ -77,7 +77,7 @@ def on_epoch_end(sentence, model, maxlen = 10):
     print('----- Input seed: %s'%original_sentence.split('.')[-1])
     print('----- Output: %s'%predicted.split('.')[0])
     sys.stdout.write("-----\n")
-    return str(original_sentence.split('.')[-1]) + ' ' + str(predicted.split('.')[0])
+    return t.texts_to_sequences(str(original_sentence.split('.')[-1]) + ' ' + str(predicted.split('.')[0]))
 
 
 seedlen = 50
