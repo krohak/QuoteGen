@@ -22,10 +22,11 @@ index_word = np.load('index_word_punc.npy')
 index_word = index_word.item()
 
 
-topics = [ #'death' , 'family', 'freedom' , 'funny', 'life' ,
+topics = [ 'death' , 'family', 
+          #'freedom' , 'funny', 'life' ,
     	#'love', 
-	#'happiness', 'death',
-	'success',  'love', 'death'
+	#'happiness', 
+	# 'success', 
 	#'science', 'politics'
 ]
 
