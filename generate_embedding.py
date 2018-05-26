@@ -53,7 +53,10 @@ for topic in topics:
     
     # In[15]:
     maxlen = 100
+    
+    '''
     step = 1
+    
     seq_funny = []
     next_seq_funny = []
 
@@ -70,7 +73,7 @@ for topic in topics:
 
     seq_funny = np.asarray(seq_funny)
     next_seq_funny = np.asarray(next_seq_funny)
-
+    '''
 
     # # Text Generation using Word Embeddings
 
