@@ -2,6 +2,8 @@ import sys
 import numpy as np
 from keras.preprocessing.text import Tokenizer
 from Model import Model
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
 
 # In[3]:
 
