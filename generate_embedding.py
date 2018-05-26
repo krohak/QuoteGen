@@ -59,12 +59,12 @@ for topic in topics:
 # # Text Generation using Word Embeddings
 def sample(preds, temperature=1.0):
 # helper function to sample an index from a probability array
-preds = np.asarray(preds).astype('float64')
-preds = np.log(preds) / temperature
-exp_preds = np.exp(preds)
-preds = exp_preds / np.sum(exp_preds)
-probas = np.random.multinomial(1, preds, 1)
-return np.argmax(probas)
+    preds = np.asarray(preds).astype('float64')
+    preds = np.log(preds) / temperature
+    exp_preds = np.exp(preds)
+    preds = exp_preds / np.sum(exp_preds)
+    probas = np.random.multinomial(1, preds, 1)
+    return np.argmax(probas)
 
 
 def on_epoch_end(epoch, logs, sentence, model):
@@ -85,7 +85,7 @@ for diversity in [1.0]: #0.2, 0.5, 1.2
 
         preds = model.predict(x_pred, verbose=0)
         preds = preds[0]
-        next_index = np.argmax(preds)
+        next_index = np.argmax(preds) #sample(preds,diversity)
         next_char = index_word[next_index]
 
         generated.join(str(next_char))
