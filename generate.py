@@ -65,7 +65,7 @@ def sample(preds, temperature=1.0):
 
 
 def on_epoch_end(sentence, model, maxlen = 10):
-    for diversity in [1.0]: #0.2, 0.5, 1.2
+    for diversity in [1.0, 0.2, 0.5, 1.2]: #
         predicted = ''
         original_sentence = ''.join([str(index_word[word])+' ' for word in sentence])
         for i in range(maxlen):
@@ -73,7 +73,7 @@ def on_epoch_end(sentence, model, maxlen = 10):
 
             preds = model.predict(x_pred, verbose=0)
             preds = preds[0]
-            next_index = np.argmax(preds) #sample(preds,diversity)
+            next_index = sample(preds,diversity) #np.argmax(preds) 
             next_char = index_word[next_index]
 
             sentence = np.append(sentence, next_index)
