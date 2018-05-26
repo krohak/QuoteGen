@@ -25,7 +25,7 @@ index_word = index_word.item()
 topics = [ #'death' , 'family', 'freedom' , 'funny', 'life' ,
     	#'love', 
 	#'happiness', 'death',
-	'success', 'death',
+	'success',  'love', 'death'
 	#'science', 'politics'
 ]
 
@@ -40,7 +40,7 @@ model_list = []
 
 
 # ## Do for all docs
-for topic in topics:
+for topic in topics[1:]:
     model_funny = Model(vocab_size,topic)
     model = model_funny.load_model()
     model_list.append(model)
@@ -97,4 +97,4 @@ sentence = funny_doc[start_index: start_index + seedlen]
 
 for model in model_list:
     sentence = on_epoch_end(sentence,model,maxlen)
-    sentence = sentence[maxlen:] #
+    #sentence = sentence[maxlen:] #
