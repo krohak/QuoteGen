@@ -73,13 +73,13 @@ def on_epoch_end(sentence, model, maxlen = 10):
             next_char = index_word[next_index]
 
             sentence = np.append(sentence, next_index)
-            predicted.join(next_char.join(' ')) 
+            predicted = predicted + next_char + ' ' 
             
             # sys.stdout.write(next_char)
             # sys.stdout.write(" ")
             # sys.stdout.flush()
      
-        print('----- Generating with seed: %s \n'%''.join([str(index_word[word])+' ' for word in sentence]))
+        print('----- Generating with seed: %s'%''.join([str(index_word[word])+' ' for word in sentence]))
         print('----- Output: %s')%predicted
     sys.stdout.write("\n")
     return sentence
