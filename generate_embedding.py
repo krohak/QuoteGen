@@ -95,3 +95,4 @@ sentence = funny_doc[start_index: start_index + seedlen]
 
 for model in model_list:
     sentence = on_epoch_end(sentence,model,maxlen)
+    sentence = sentence[5:] #
