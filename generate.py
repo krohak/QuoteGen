@@ -11,7 +11,7 @@ with open('data/all-punctuation.txt','r') as quotefile:
     
 # In[4]:
 
-t = Tokenizer()
+t = Tokenizer(filters='')
 t.fit_on_texts(quotes)
 vocab_size = len(t.word_index) + 1
 
@@ -90,8 +90,8 @@ def on_epoch_end(sentence, model, maxlen = 10):
     return sentence
 
         
-seedlen = 10
-maxlen = 10
+seedlen = 50
+maxlen = 50
 start_index = np.random.randint(0, len(funny_doc) - seedlen - 1)
 sentence = funny_doc[start_index: start_index + seedlen]
 #sentence = [2, 13, 148, 5, 2] # to be happy is to
