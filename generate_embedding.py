@@ -57,7 +57,7 @@ def sample(preds, temperature=1.0):
     return np.argmax(probas)
 
 
-def on_epoch_end(maxlen = 10, sentence, model):
+def on_epoch_end(sentence, model, maxlen = 10):
     print()
     print('----- Generating text:')
 
@@ -94,4 +94,4 @@ start_index = np.random.randint(0, len(funny_doc) - seedlen - 1)
 sentence = funny_doc[start_index: start_index + seedlen]
 
 for model in model_list:
-    sentence = on_epoch_end(maxlen,sentence,model)
+    sentence = on_epoch_end(sentence,model,maxlen)
