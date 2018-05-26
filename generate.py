@@ -78,7 +78,7 @@ def on_epoch_end(sentence, model, maxlen = 10):
             # sys.stdout.write(next_char)
             if i % (maxlen // 4) == 0:
                 sys.stdout.write(".")
-            # sys.stdout.flush()
+            sys.stdout.flush()
      
         print('----- Generating with seed: %s'%''.join([str(index_word[word])+' ' for word in sentence]))
         print('----- Output: %s')%predicted
