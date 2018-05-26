@@ -19,7 +19,7 @@ from keras.utils import to_categorical
 
 # In[3]:
 
-with open('data/all.txt','r') as quotefile:
+with open('data/all-punctuation.txt','r') as quotefile:
     quotes = quotefile.readlines()
 
 
@@ -34,8 +34,11 @@ vocab_size = len(t.word_index) + 1
 
 # In[12]:
 
-embedding_matrix = np.load('embedding_matrix.npy')
+embedding_matrix = np.load('embedding_matrix_punc.npy')
 embedding_matrix.shape
+
+index_word = np.load('index_word_punc.npy')
+index_word = index_word.item()
 
 
 topics = ['death' , 'family', 'freedom' , 'funny', 'life' , 'love', 'happiness', 'success', 'science', 'politics']
@@ -44,7 +47,7 @@ for topic in topics:
 
     # In[13]:
 
-    with open('data/%s.txt'%topic,'r') as funnyfile:
+    with open('data/%s-punctuation.txt'%topic,'r') as funnyfile:
         funnyquotes = funnyfile.readlines()
 
 
@@ -94,7 +97,7 @@ for topic in topics:
 
     # In[25]:
 
-    X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.1)
+    # X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.1)
 
 
 
@@ -143,9 +146,6 @@ for topic in topics:
 
 
     # In[32]:
-
-    index_word = np.load('index_word.npy')
-    index_word = index_word.item()
 
     def sample(preds, temperature=1.0):
         # helper function to sample an index from a probability array
@@ -197,7 +197,7 @@ for topic in topics:
 
 
     # In[33]:
-    filepath="QG-weights-%s-{epoch:02d}-{loss:.4f}-{acc:.4f}.hdf5"%topic
+    filepath="QG-punc-%s-{epoch:02d}-{loss:.4f}-{acc:.4f}.hdf5"%topic
     checkpoint = ModelCheckpoint(filepath, monitor='loss', verbose=1, save_best_only=True, mode='min')
 
     print_callback = LambdaCallback(on_epoch_end=on_epoch_end)
@@ -205,7 +205,7 @@ for topic in topics:
 
     # In[ ]:
 
-    model.fit(X_train, y_train, validation_data=(X_test, y_test), 
+    model.fit(X, y, #X_train, y_train, validation_data=(X_test, y_test), 
               epochs=35, 
               batch_size=24,
               callbacks=[checkpoint, print_callback])
