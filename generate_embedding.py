@@ -1,16 +1,7 @@
 import sys
 import numpy as np
-from numpy import array
-from numpy import asarray
-from numpy import zeros
-
 from keras.preprocessing.text import Tokenizer
 from Model import Model
-'''
-from keras.models import Sequential
-from keras.layers import Dense, LSTM, Activation, Embedding
-from keras.optimizers import Adam
-'''
 
 # In[3]:
 
@@ -24,7 +15,6 @@ t = Tokenizer()
 t.fit_on_texts(quotes)
 vocab_size = len(t.word_index) + 1
 
-maxlen = 10
 
 # In[12]:
 
@@ -67,9 +57,9 @@ def sample(preds, temperature=1.0):
     return np.argmax(probas)
 
 
-def on_epoch_end(epoch, logs, sentence, model):
+def on_epoch_end(maxlen = 10, sentence, model):
     print()
-    print('----- Generating text after Epoch: %d' % epoch)
+    print('----- Generating text:')
 
 
     for diversity in [1.0]: #0.2, 0.5, 1.2
@@ -80,7 +70,7 @@ def on_epoch_end(epoch, logs, sentence, model):
         generated.join([str([index_word[value]]).join(' ') for value in sentence])
         print('----- Generating with seed: %s'%[index_word[word] for word in sentence])
 
-        for i in range(20):
+        for i in range(maxlen):
             x_pred = np.reshape(sentence,(1, -1))
 
             preds = model.predict(x_pred, verbose=0)
@@ -98,9 +88,10 @@ def on_epoch_end(epoch, logs, sentence, model):
     return sentence
 
         
-seed_len = 5     
-start_index = np.random.randint(0, len(funny_doc) - seed_len - 1)
-sentence = funny_doc[start_index: start_index + seed_len]
+seedlen = 5
+maxlen = 5
+start_index = np.random.randint(0, len(funny_doc) - seedlen - 1)
+sentence = funny_doc[start_index: start_index + seedlen]
 
 for model in model_list:
-    sentence = on_epoch_end(1,1,sentence,model)
+    sentence = on_epoch_end(maxlen,sentence,model)
