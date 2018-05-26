@@ -90,8 +90,9 @@ def on_epoch_end(sentence, model, maxlen = 10):
         
 seedlen = 5
 maxlen = 5
-start_index = np.random.randint(0, len(funny_doc) - seedlen - 1)
-sentence = funny_doc[start_index: start_index + seedlen]
+# start_index = np.random.randint(0, len(funny_doc) - seedlen - 1)
+# sentence = funny_doc[start_index: start_index + seedlen]
+sentence = [2, 13, 148, 5, 2] # to be happy is to
 
 for model in model_list:
     sentence = on_epoch_end(sentence,model,maxlen)
