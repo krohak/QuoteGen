@@ -98,9 +98,9 @@ def on_epoch_end(epoch, logs, sentence, model):
     return sentence
 
         
-        
-start_index = np.random.randint(0, len(funny_doc) - maxlen - 1)
-sentence = funny_doc[start_index: start_index + maxlen]
+seed_len = 10        
+start_index = np.random.randint(0, len(funny_doc) - seed_len - 1)
+sentence = funny_doc[start_index: start_index + seed_len]
 
 for model in model_list:
     sentence = on_epoch_end(1,1,sentence,model)
