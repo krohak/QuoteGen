@@ -4,12 +4,12 @@ from keras.optimizers import Adam
 
 
 class Model:
-    
+
     def __init__(self,vocab_size,topic):
         self.vocab_size = vocab_size
         self.topic = topic
-    
-    def load_model(self):    
+
+    def load_model(self):
         model = Sequential()
         model.add(Embedding(self.vocab_size, 100))
         model.add(LSTM(100))
@@ -18,7 +18,7 @@ class Model:
 
         model.add(Activation('softmax'))
         optimizer = Adam(lr=0.001, beta_1=0.9, beta_2=0.999)
-        filename = "QG-punc-%s.hdf5"%self.topic
+        filename = "QG-%s.hdf5"%self.topic
         model.load_weights(filename)
 
         model.compile(
@@ -26,5 +26,4 @@ class Model:
             optimizer=optimizer,
             metrics=['accuracy'])
 
-        # print(model.summary())
         return model

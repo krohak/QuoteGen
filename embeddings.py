@@ -19,11 +19,11 @@ from keras.utils import to_categorical
 
 # In[3]:
 
-with open('data/all-punctuation.txt','r') as quotefile:
+with open('data/all.txt','r') as quotefile:
     quotes = quotefile.readlines()
 
 
-    
+
 # In[4]:
 
 t = Tokenizer(filters='')
@@ -34,10 +34,10 @@ print(vocab_size)
 
 # In[12]:
 
-embedding_matrix = np.load('embedding_matrix_punc.npy')
+embedding_matrix = np.load('data/embedding_matrix.npy')
 embedding_matrix.shape
 
-index_word = np.load('index_word_punc.npy')
+index_word = np.load('data/index_word_punc.npy')
 index_word = index_word.item()
 
 
@@ -47,7 +47,7 @@ for topic in topics:
 
     # In[13]:
 
-    with open('data/%s-punctuation.txt'%topic,'r') as funnyfile:
+    with open('data/%s.txt'%topic,'r') as funnyfile:
         funnyquotes = funnyfile.readlines()
 
 
@@ -104,10 +104,10 @@ for topic in topics:
     # In[26]:
 
     e = Embedding(
-        vocab_size, 
-        100, 
-        weights=[embedding_matrix], 
-        #input_length=maxlen, 
+        vocab_size,
+        100,
+        weights=[embedding_matrix],
+        #input_length=maxlen,
         #trainable=False
         )
 
@@ -197,7 +197,7 @@ for topic in topics:
 
 
     # In[33]:
-    filepath="QG-punc-%s-{epoch:02d}-{loss:.4f}-{acc:.4f}.hdf5"%topic
+    filepath="QG-%s-{epoch:02d}-{loss:.4f}-{acc:.4f}.hdf5"%topic
     checkpoint = ModelCheckpoint(filepath, monitor='loss', verbose=1, save_best_only=True, mode='min')
 
     print_callback = LambdaCallback(on_epoch_end=on_epoch_end)
@@ -205,7 +205,7 @@ for topic in topics:
 
     # In[ ]:
 
-    model.fit(X, y, #X_train, y_train, validation_data=(X_test, y_test), 
-              epochs=30, 
+    model.fit(X, y, #X_train, y_train, validation_data=(X_test, y_test),
+              epochs=30,
               batch_size=24,
               callbacks=[checkpoint, print_callback])

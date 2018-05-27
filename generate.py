@@ -7,7 +7,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 # In[3]:
 
-with open('data/all-punctuation.txt','r') as quotefile:
+with open('data/all.txt','r') as quotefile:
     quotes = quotefile.readlines()
 
 
@@ -20,7 +20,7 @@ vocab_size = len(t.word_index) + 1
 
 # In[12]:
 
-index_word = np.load('index_word_punc.npy')
+index_word = np.load('data/index_word.npy')
 index_word = index_word.item()
 
 
@@ -36,7 +36,7 @@ topics = [ #'death' ,
 ]
 
 # In[13]:
-with open('data/%s-punctuation.txt'%topics[0],'r') as funnyfile:
+with open('data/%s.txt'%topics[0],'r') as funnyfile:
     funnyquotes = funnyfile.readlines()
 
 encoded_docs = t.texts_to_sequences(funnyquotes)
