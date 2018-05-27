@@ -43,7 +43,7 @@ index_word = np.load('data/index_word.npy')
 index_word = index_word.item()
 
 
-topics = ['death' , 'family', 'freedom' , 'funny', 'life' , 'love', 'happiness', 'success', 'science', 'politics']
+topics = ['death' , 'family', 'freedom' , 'funny', 'life' , 'love', 'happiness', 'science', 'success', 'politics']
 # ## Do for all docs
 for topic in topics:
 
@@ -75,7 +75,7 @@ for topic in topics:
         seq_funny.append(funny_doc[i: i + maxlen])
         next_seq_funny.append(funny_doc[i + maxlen])
 
-    print('nb sequences:', len(seq_funny))
+    print('sequences:', len(seq_funny))
 
     seq_funny = np.asarray(seq_funny)
     next_seq_funny = np.asarray(next_seq_funny)
@@ -122,6 +122,9 @@ for topic in topics:
 
         predicted = ''
         original_sentence = ''.join([str(index_word[word])+' ' for word in sentence])
+        print('----- Input seed: %s'%original_sentence)
+        print('----- Output: ')
+
         for i in range(maxlen):
             x_pred = np.reshape(sentence,(1, -1))
 
@@ -133,13 +136,10 @@ for topic in topics:
             sentence = np.append(sentence, next_index)
             predicted = predicted + next_char + ' '
 
-            if i % (maxlen // 4) == 0:
-                sys.stdout.write("-")
+            sys.stdout.write(next_char)
             sys.stdout.flush()
 
-        sys.stdout.write("\n")
-        print('----- Input seed: %s'%original_sentence.split('.')[-1])
-        print('----- Output: %s'%predicted.split('.')[0])
+        # sys.stdout.write("\n")
         sys.stdout.write("-----\n")
 
     print_callback = LambdaCallback(on_epoch_end=on_epoch_end)
