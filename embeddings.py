@@ -39,7 +39,7 @@ print(vocab_size)
 embedding_matrix = np.load('data/embedding_matrix.npy')
 embedding_matrix.shape
 
-index_word = np.load('data/index_word_punc.npy')
+index_word = np.load('data/index_word.npy')
 index_word = index_word.item()
 
 
@@ -143,7 +143,7 @@ for topic in topics:
         sys.stdout.write("-----\n")
 
     print_callback = LambdaCallback(on_epoch_end=on_epoch_end)
-    
+
     # In[33]:
     filepath="trained_weights/QG-%s-{epoch:02d}-{loss:.4f}-{acc:.4f}.hdf5"%topic
     checkpoint = ModelCheckpoint(filepath, monitor='loss', verbose=1, save_best_only=True, mode='min')
