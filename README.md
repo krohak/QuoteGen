@@ -6,12 +6,11 @@ Refer to [Quotes Generation using Word Embeddings.ipynb](https://github.com/kroh
 
 
 On death and love:
-________________________________________
-/ ----- ----- Input seed: i find the     \
-| death of a young person the most ----- |
-| Output: important thing in the world   |
-\ -----                                  /
-----------------------------------------
+
+
+- Input seed: *i find the death of a young person the most*
+- Output: *important thing in the world*
+
        \   ^__^
         \  (oo)\_______
            (__)\       )\/\
