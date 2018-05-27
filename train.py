@@ -85,8 +85,8 @@ for topic in topics:
 
 
     # In[20]:
-    y = to_categorical(next_seq_funny, num_classes=vocab_size)
     X = seq_funny
+    y = to_categorical(next_seq_funny, num_classes=vocab_size)
 
     # In[26]:
     model = Sequential()

@@ -1,4 +1,9 @@
 import sys
+
+if not len(sys.argv[1:])>1:
+    print("Select 2 topics from 'death' ,'family', 'funny', 'freedom' , 'life' , 'love', 'happiness', 'science', 'success', 'politics'")
+    sys.exit()
+
 import numpy as np
 from keras.preprocessing.text import Tokenizer
 from Model import Model
@@ -24,18 +29,7 @@ index_word = np.load('data/index_word.npy')
 index_word = index_word.item()
 
 
-topics = [
-    'death' ,
-    #'family',
-    'funny', 
-    #'freedom' ,
-    #'life' ,
-    #'love',
-	#'happiness',
-	# 'success',
-	#'science',
-    # 'politics'
-]
+topics = sys.argv[1:]
 
 # In[13]:
 with open('data/%s.txt'%topics[0],'r') as funnyfile:
