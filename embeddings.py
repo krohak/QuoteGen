@@ -113,47 +113,40 @@ for topic in topics:
     # In[32]:
 
     def on_epoch_end(epoch, logs):
-        # Function invoked at end of each epoch. Prints generated text.
+
         print()
         print('----- Generating text after Epoch: %d' % epoch)
 
         start_index = np.random.randint(0, len(funny_doc) - maxlen - 1)
-        for diversity in [0.2]: # 0.5, 1.0, 1.2
-            print('----- diversity:', diversity)
+        sentence = funny_doc[start_index: start_index + maxlen]
 
-            generated = ''
-            sentence = funny_doc[start_index: start_index + maxlen]
-            print(sentence)
-            generated.join([str([index_word[value]]).join(' ') for value in sentence])
-            print('----- Generating with seed: %s'%[index_word[word] for word in sentence])
-            #sys.stdout.write(generated)
+        predicted = ''
+        original_sentence = ''.join([str(index_word[word])+' ' for word in sentence])
+        for i in range(maxlen):
+            x_pred = np.reshape(sentence,(1, -1))
 
-            for i in range(20):
-                x_pred = np.reshape(sentence,(1, -1))
+            preds = model.predict(x_pred, verbose=0)
+            preds = preds[0]
+            next_index =  np.argmax(preds)
+            next_char = index_word[next_index]
 
-                preds = model.predict(x_pred, verbose=0)
-                preds = preds[0]
+            sentence = np.append(sentence, next_index)
+            predicted = predicted + next_char + ' '
 
-                next_index = np.argmax(preds)
+            if i % (maxlen // 4) == 0:
+                sys.stdout.write("-")
+            sys.stdout.flush()
 
-                next_char = index_word[next_index]
+        sys.stdout.write("\n")
+        print('----- Input seed: %s'%original_sentence.split('.')[-1])
+        print('----- Output: %s'%predicted.split('.')[0])
+        sys.stdout.write("-----\n")
 
-                generated.join(str(next_char))
-                sentence = np.append(sentence,next_index)
-
-                sys.stdout.write(next_char)
-                sys.stdout.write(" ")
-                sys.stdout.flush()
-            print()
-
-
-
+    print_callback = LambdaCallback(on_epoch_end=on_epoch_end)
+    
     # In[33]:
     filepath="trained_weights/QG-%s-{epoch:02d}-{loss:.4f}-{acc:.4f}.hdf5"%topic
     checkpoint = ModelCheckpoint(filepath, monitor='loss', verbose=1, save_best_only=True, mode='min')
-
-    print_callback = LambdaCallback(on_epoch_end=on_epoch_end)
-
 
     # In[ ]:
 

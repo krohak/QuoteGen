@@ -24,15 +24,17 @@ index_word = np.load('data/index_word.npy')
 index_word = index_word.item()
 
 
-topics = [ #'death' ,
-		#'family',
-	# 'death', 'funny',
-     'funny', 'freedom' , #'death',
-	#'life' ,
-    	#'love',
+topics = [
+    'death' ,
+    #'family',
+    'funny', 
+    #'freedom' ,
+    #'life' ,
+    #'love',
 	#'happiness',
 	# 'success',
-	#'science', 'politics'
+	#'science',
+    # 'politics'
 ]
 
 # In[13]:
