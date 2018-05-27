@@ -18,12 +18,16 @@ class Model:
 
         model.add(Activation('softmax'))
         optimizer = Adam(lr=0.001, beta_1=0.9, beta_2=0.999)
-        filename = "QG-%s.hdf5"%self.topic
-        model.load_weights(filename)
+        filename = "trained_weights/QG-%s.hdf5"%self.topic
+        try:
+            model.load_weights(filename)
+            model.compile(
+                loss='categorical_crossentropy',
+                optimizer=optimizer,
+                metrics=['accuracy'])
 
-        model.compile(
-            loss='categorical_crossentropy',
-            optimizer=optimizer,
-            metrics=['accuracy'])
-
-        return model
+            return model
+            
+        except Exception as e:
+            print(e)
+            print("Save model as QG-%s.hdf5"%topic.topic)

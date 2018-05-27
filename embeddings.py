@@ -1,5 +1,6 @@
-import numpy as np
+import os
 import sys
+import numpy as np
 from numpy import array
 from numpy import asarray
 from numpy import zeros
@@ -22,7 +23,8 @@ from keras.utils import to_categorical
 with open('data/all.txt','r') as quotefile:
     quotes = quotefile.readlines()
 
-
+if not os.path.exists('trained_weights'):
+    os.mkdir('trained_weights')
 
 # In[4]:
 
@@ -79,59 +81,22 @@ for topic in topics:
     next_seq_funny = np.asarray(next_seq_funny)
 
 
-
-
     # # Text Generation using Word Embeddings
 
 
     # In[20]:
-
-
     y = to_categorical(next_seq_funny, num_classes=vocab_size)
-
-
-    # In[22]:
-
     X = seq_funny
 
-
-    # In[25]:
-
-    # X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.1)
-
-
-
     # In[26]:
-
-    e = Embedding(
-        vocab_size,
-        100,
-        weights=[embedding_matrix],
-        #input_length=maxlen,
-        #trainable=False
-        )
-
-
-    # In[27]:
-
     model = Sequential()
+    e = Embedding( vocab_size, 100, weights=[embedding_matrix], trainable=True)
     model.add(e)
-
-
-    # In[28]:
-
-    #model.add(Conv1D(filters=32, kernel_size=5, padding='same', activation='relu'))
-    #model.add(MaxPooling1D(pool_size=3))
-
 
     # In[29]:
 
-    #model.add(LSTM(100, return_sequences=True)) #
     model.add(LSTM(100))
-
-    #model.add(Dense(100, activation='relu'))
     model.add(Dense(y.shape[1]))
-
 
     # In[30]:
 
@@ -146,17 +111,6 @@ for topic in topics:
 
 
     # In[32]:
-
-    def sample(preds, temperature=1.0):
-        # helper function to sample an index from a probability array
-        # preds = preds[1:]
-        # preds = np.asarray(preds).astype('float64')
-        # preds = np.log(preds) / temperature
-        # exp_preds = np.exp(preds)
-        # preds = exp_preds / np.sum(exp_preds)
-        # probas = np.random.multinomial(1, preds, 1)
-        return np.argmax(preds)
-
 
     def on_epoch_end(epoch, logs):
         # Function invoked at end of each epoch. Prints generated text.
@@ -175,19 +129,17 @@ for topic in topics:
             #sys.stdout.write(generated)
 
             for i in range(20):
-                x_pred = np.reshape(sentence,(1, -1 #maxlen
-                            ))
+                x_pred = np.reshape(sentence,(1, -1))
 
                 preds = model.predict(x_pred, verbose=0)
                 preds = preds[0]
-                # print(preds.shape)
-                next_index = sample(preds, diversity)
-                #print(next_index)
+
+                next_index = np.argmax(preds)
+
                 next_char = index_word[next_index]
 
                 generated.join(str(next_char))
-                sentence = np.append(sentence #[1:]
-                        ,next_index)
+                sentence = np.append(sentence,next_index)
 
                 sys.stdout.write(next_char)
                 sys.stdout.write(" ")
@@ -197,7 +149,7 @@ for topic in topics:
 
 
     # In[33]:
-    filepath="QG-%s-{epoch:02d}-{loss:.4f}-{acc:.4f}.hdf5"%topic
+    filepath="trained_weights/QG-%s-{epoch:02d}-{loss:.4f}-{acc:.4f}.hdf5"%topic
     checkpoint = ModelCheckpoint(filepath, monitor='loss', verbose=1, save_best_only=True, mode='min')
 
     print_callback = LambdaCallback(on_epoch_end=on_epoch_end)
@@ -205,7 +157,4 @@ for topic in topics:
 
     # In[ ]:
 
-    model.fit(X, y, #X_train, y_train, validation_data=(X_test, y_test),
-              epochs=30,
-              batch_size=24,
-              callbacks=[checkpoint, print_callback])
+    model.fit(X, y, epochs=30, batch_size=24, callbacks=[checkpoint, print_callback])
