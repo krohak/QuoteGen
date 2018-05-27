@@ -100,7 +100,7 @@ print('Build model...')
 model = Sequential()
 
 model.add(LSTM(256, input_shape=(
-                            None, #X.shape[1], 
+                            None, #X.shape[1],
                             X.shape[2]),
                #return_sequences=True,
                #activation='sigmoid'
@@ -146,7 +146,7 @@ def sample(preds, temperature=1.0):
     # preds = exp_preds / np.sum(exp_preds)
     # probas = np.random.multinomial(1, preds, 1)
     return np.argmax(preds)
-    #return preds
+    #return np.argmax(probas)
 
 
 # In[13]:
@@ -168,8 +168,8 @@ def on_epoch_end(epoch, logs):
         sys.stdout.write(generated)
 
         for i in range(15):
-            x_pred = np.reshape(sentence,(1, 
-                                          -1, #maxlen, 
+            x_pred = np.reshape(sentence,(1,
+                                          -1, #maxlen,
                                           1))
             x_pred = x_pred / max_word
 
@@ -209,6 +209,3 @@ model.fit(X, y,
 
 
 # In[ ]:
-
-
-

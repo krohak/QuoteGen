@@ -152,15 +152,14 @@ X.shape
 # In[8]:
 
 def sample(preds, temperature=1.0):
-    # helper function to sample an index from a probability array
-    # preds = preds[1:]
-    # preds = np.asarray(preds).astype('float64')
-    # preds = np.log(preds) / temperature
-    # exp_preds = np.exp(preds)
-    # preds = exp_preds / np.sum(exp_preds)
-    # probas = np.random.multinomial(1, preds, 1)
-    #return np.argmax(preds)
-    return preds
+    helper function to sample an index from a probability array
+    preds = preds[1:]
+    preds = np.asarray(preds).astype('float64')
+    preds = np.log(preds) / temperature
+    exp_preds = np.exp(preds)
+    preds = exp_preds / np.sum(exp_preds)
+    probas = np.random.multinomial(1, preds, 1)
+    return np.argmax(probas)
 
 
 # In[14]:
@@ -182,21 +181,21 @@ def on_epoch_end(epoch, logs):
         sys.stdout.write(generated)
 
         for i in range(15):
-            x_pred = np.reshape(sentence,(1, 
-                                          -1, #maxlen, 
+            x_pred = np.reshape(sentence,(1,
+                                          -1, #maxlen,
                                           1))
             x_pred = x_pred / max_word
 
             preds = model.predict(x_pred, verbose=0)
             preds = preds[0]
             #print(preds.shape)
-            next_index = round(sample(preds, diversity)[0]) # 
+            next_index = round(sample(preds, diversity)[0]) #
             #print(next_index)
             next_char = int_to_word[next_index]
 
             generated.join(str(next_char))
             sentence = np.append(
-                                 sentence[1:],   #sentence, 
+                                 sentence[1:],   #sentence,
                                  next_index)
 
             sys.stdout.write(next_char)
@@ -223,6 +222,3 @@ model.fit(X, y,
 
 
 # In[ ]:
-
-
-
