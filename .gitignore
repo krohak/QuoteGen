@@ -1,4 +1,4 @@
-trained_weights/
+trained_weights2/
 .ipynb_checkpoints/
 
 data/embeddings_index.npy
