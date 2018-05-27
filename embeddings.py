@@ -137,11 +137,12 @@ for topic in topics:
             predicted = predicted + next_char + ' '
 
             sys.stdout.write(next_char)
+            sys.stdout.write(' ')
             sys.stdout.flush()
 
-        # sys.stdout.write("\n")
+        sys.stdout.write("\n")
         sys.stdout.write("-----\n")
-
+        #print('----- Output: %s')%predicted
     print_callback = LambdaCallback(on_epoch_end=on_epoch_end)
 
     # In[33]:
