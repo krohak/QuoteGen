@@ -1,7 +1,7 @@
 import sys
 
 if not len(sys.argv[1:])>1:
-    print("Select 2 topics from 'death' ,'family', 'funny', 'freedom' , 'life' , 'love', 'happiness', 'science', 'success', 'politics'")
+    print("Select atleast 2 topics from 'death' ,'family', 'funny', 'freedom' , 'life' , 'love', 'happiness', 'science', 'success', 'politics'")
     sys.exit()
 
 import numpy as np
@@ -73,7 +73,8 @@ def on_epoch_end(sentence, model, maxlen = 10):
     print('----- Input seed: %s'%original_sentence.split('.')[-1])
     print('----- Output: %s'%predicted.split('.')[0])
     sys.stdout.write("-----\n")
-    return t.texts_to_sequences(str(original_sentence.split('.')[-1]) + ' ' + str(predicted.split('.')[0]))[0]
+    return original_sentence.split('.')[-1] + predicted.split('.')[0]
+    # t.texts_to_sequences(str(original_sentence.split('.')[-1]) + ' ' + str(predicted.split('.')[0]))
 
 
 seedlen = 50
@@ -81,7 +82,9 @@ maxlen = 50
 start_index = np.random.randint(0, len(funny_doc) - seedlen - 1)
 sentence = funny_doc[start_index: start_index + seedlen]
 #sentence = [2, 13, 148, 5, 2] # to be happy is to
+#print([topic for topic in topics])
 
 for model in model_list:
     sentence = on_epoch_end(sentence,model,maxlen)
-    sentence = sentence[maxlen:] #
+    sentence = np.asarray(t.texts_to_sequences([word for word in sentence.split(' ')][1:-1])).flatten()
+    #sentence = sentence[maxlen:] #
