@@ -10,9 +10,3 @@ On death and love:
 
 - Input seed: *i find the death of a young person the most*
 - Output: *important thing in the world*
-
-       \   ^__^
-        \  (oo)\_______
-           (__)\       )\/\
-               ||----w |
-               ||     ||
