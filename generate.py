@@ -1,9 +1,13 @@
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument("topics", help="select atleast 2 topics from 'death' ,'family', 'funny', 'freedom' , 'life' , 'love', 'happiness',  'science', 'success', 'politics'", type=str, nargs='+')
+parser.add_argument("-s","--seed", help="input a custom seed sentence")
+args = parser.parse_args()
+if len(args.topics) < 2 and not args.seed:
+        raise Exception("select atleast 2 topics from 'death' ,'family', 'funny', 'freedom' ,'life' , 'love', 'happiness',  'science', 'success', 'politics'")
+
+
 import sys
-
-if not len(sys.argv[1:])>1:
-    print("Select atleast 2 topics from 'death' ,'family', 'funny', 'freedom' , 'life' , 'love', 'happiness', 'science', 'success', 'politics'")
-    sys.exit()
-
 import numpy as np
 from keras.preprocessing.text import Tokenizer
 from Model import Model
@@ -29,20 +33,38 @@ index_word = np.load('data/index_word.npy')
 index_word = index_word.item()
 
 
-topics = sys.argv[1:]
+topics = args.topics
 
 # In[13]:
-with open('data/%s.txt'%topics[0],'r') as funnyfile:
-    funnyquotes = funnyfile.readlines()
 
-encoded_docs = t.texts_to_sequences(funnyquotes)
-funny_doc = encoded_docs[0]
+## accomodate custom seed
+model_topics = []
+funny_doc = []
+seedlen = 50
+maxlen = 50
+sentence=""
+
+if not args.seed:
+    with open('data/%s.txt'%topics[0],'r') as funnyfile:
+        funnyquotes = funnyfile.readlines()
+
+    encoded_docs = t.texts_to_sequences(funnyquotes)
+    funny_doc = encoded_docs[0]
+    start_index = np.random.randint(0, len(funny_doc) - seedlen - 1)
+    sentence = funny_doc[start_index: start_index + seedlen]
+
+    model_topics = topics[1:]
+else:
+    sentence = args.seed
+    sentence = t.texts_to_sequences([word for word in sentence.split(' ')])
+    sentence = list(filter(None, sentence))
+    sentence = np.asarray(sentence).flatten()
+    model_topics = topics
+
 
 model_list = []
-
-
 # ## Do for all docs except first
-for topic in topics[1:]:
+for topic in model_topics:
     model_funny = Model(vocab_size,topic)
     model = model_funny.load_model()
     model_list.append(model)
@@ -50,7 +72,6 @@ for topic in topics[1:]:
 
 
 def on_epoch_end(sentence, model, maxlen = 10):
-    # for diversity in [1.0]: # 0.2, 0.5, 1.2
     predicted = ''
     original_sentence = ''.join([str(index_word[word])+' ' for word in sentence])
     for i in range(maxlen):
@@ -74,15 +95,6 @@ def on_epoch_end(sentence, model, maxlen = 10):
     print('----- Output: %s'%predicted.split('.')[0])
     sys.stdout.write("-----\n")
     return original_sentence.split('.')[-1] + predicted.split('.')[0]
-    # t.texts_to_sequences(str(original_sentence.split('.')[-1]) + ' ' + str(predicted.split('.')[0]))
-
-
-seedlen = 50
-maxlen = 50
-start_index = np.random.randint(0, len(funny_doc) - seedlen - 1)
-sentence = funny_doc[start_index: start_index + seedlen]
-#sentence = [2, 13, 148, 5, 2] # to be happy is to
-#print([topic for topic in topics])
 
 for model in model_list:
     sentence = on_epoch_end(sentence,model,maxlen)
