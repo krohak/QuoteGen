@@ -1,11 +1,13 @@
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("topics", help="select atleast 2 topics from 'death' ,'family', 'funny', 'freedom' , 'life' , 'love', 'happiness',  'science', 'success', 'politics'", type=str, nargs='+')
-parser.add_argument("-s","--seed", help="input a custom seed sentence")
+parser.add_argument("-s","--seed", help="input a custom seed sentence",type=str)
+parser.add_argument("-n","--num", help="number of input and output sentences in quote",type=int)
 args = parser.parse_args()
 if len(args.topics) < 2 and not args.seed:
         raise Exception("select atleast 2 topics from 'death' ,'family', 'funny', 'freedom' ,'life' , 'love', 'happiness',  'science', 'success', 'politics'")
-
+if args.N > 3:
+    raise Exception("Choose number of sentences between 1-3")
 
 import sys
 import numpy as np
@@ -69,8 +71,9 @@ for topic in model_topics:
     model = model_funny.load_model()
     model_list.append(model)
 
-
-
+n = 1
+if args.N:
+    n = args.N
 def on_epoch_end(sentence, model, maxlen = 10):
     predicted = ''
     original_sentence = ''.join([str(index_word[word])+' ' for word in sentence])
@@ -91,12 +94,13 @@ def on_epoch_end(sentence, model, maxlen = 10):
         sys.stdout.flush()
 
     sys.stdout.write("\n")
-    print('----- Input seed: %s'%original_sentence.split('.')[-1])
-    print('----- Output: %s'%predicted.split('.')[0])
+    print('----- Input seed: %s'%original_sentence.split('.')[-n:])
+    print('----- Output: %s'%predicted.split('.')[0:n])
     sys.stdout.write("-----\n")
-    return original_sentence.split('.')[-1] + predicted.split('.')[0]
+    return original_sentence.split('.')[-n:] + predicted.split('.')[0:n]
 
 for model in model_list:
     sentence = on_epoch_end(sentence,model,maxlen)
-    sentence = np.asarray(t.texts_to_sequences([word for word in sentence.split(' ')][1:-1])).flatten()
+    sentence = [sent.split(' ') for sent in sentence]
+    sentence = np.asarray(t.texts_to_sequences([word for word in sentence])).flatten()
     #sentence = sentence[maxlen:] #
