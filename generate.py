@@ -6,8 +6,12 @@ parser.add_argument("-n","--num", help="number of input and output sentences in 
 args = parser.parse_args()
 if len(args.topics) < 2 and not args.seed:
         raise Exception("select atleast 2 topics from 'death' ,'family', 'funny', 'freedom' ,'life' , 'love', 'happiness',  'science', 'success', 'politics'")
-if args.N > 3:
-    raise Exception("Choose number of sentences between 1-3")
+n = 1
+if args.num:
+    if args.num > 3:
+        raise Exception("Choose number of sentences between 1-3")
+    else:
+        n = args.num
 
 import sys
 import numpy as np
@@ -71,9 +75,7 @@ for topic in model_topics:
     model = model_funny.load_model()
     model_list.append(model)
 
-n = 1
-if args.N:
-    n = args.N
+
 def on_epoch_end(sentence, model, maxlen = 10):
     predicted = ''
     original_sentence = ''.join([str(index_word[word])+' ' for word in sentence])
@@ -94,8 +96,8 @@ def on_epoch_end(sentence, model, maxlen = 10):
         sys.stdout.flush()
 
     sys.stdout.write("\n")
-    print('----- Input seed: %s'%original_sentence.split('.')[-n:])
-    print('----- Output: %s'%predicted.split('.')[0:n])
+    print('----- Input seed: %s'%','.join(original_sentence.split('.')[-n:]))
+    print('----- Output: %s'%','.join(predicted.split('.')[0:n]))
     sys.stdout.write("-----\n")
     return original_sentence.split('.')[-n:] + predicted.split('.')[0:n]
 
