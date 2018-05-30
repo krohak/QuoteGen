@@ -14,3 +14,6 @@ On death and love:
 ### 2018-05-28
 - Extended input capactiy to more than two topics
 - Included functionality of custom seed input
+
+### 2018-05-30
+- Set input and output paragraph length
