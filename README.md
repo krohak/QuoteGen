@@ -1,10 +1,10 @@
 # QuoteGen
 
 
-![1](https://github.com/krohak/QuoteGen/outputs/1.jpg)
-![2](https://github.com/krohak/QuoteGen/outputs/2.png)
-![3](https://github.com/krohak/QuoteGen/outputs/3.png)
-![4](https://github.com/krohak/QuoteGen/outputs/qg.png)
+![1](https://raw.githubusercontent.com/krohak/QuoteGen/master/outputs/1.jpg)
+![2](https://raw.githubusercontent.com/krohak/QuoteGen/master/outputs/2.png)
+![3](https://raw.githubusercontent.com/krohak/QuoteGen/master/outputs/3.png)
+![4](https://raw.githubusercontent.com/krohak/QuoteGen/master/outputs/qg.png)
 
 
 ## Cross-Topic Quotes Generation using Word Embeddings
